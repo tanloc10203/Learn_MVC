@@ -1,8 +1,10 @@
 <?php
 
+namespace app\core;
+
 class Application
 {
-  private $controller = "home";
+  private $controller = "Home";
   private $action = "index";
   private array $params = [];
 
@@ -16,7 +18,9 @@ class Application
 
     require_once CONTROLLER_PATH . "$this->controller.php";
 
-    $this->controller = new $this->controller;
+    $class = "app\\controllers\\$this->controller";
+
+    $this->controller = new $class;
 
     if (isset($url_path[1]) && method_exists($this->controller, $url_path[1]))
       $this->action = $url_path[1];
@@ -35,6 +39,6 @@ class Application
   {
     if (isset($_GET['url']))
       return explode("/", filter_var(trim($_GET['url'], '/')));
-    return ['0' => 'home'];
+    return ['0' => 'Home'];
   }
 }

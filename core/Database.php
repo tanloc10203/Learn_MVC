@@ -1,8 +1,10 @@
 <?php
 
+namespace app\core;
+
 class Database
 {
-  private PDO $conn;
+  private \PDO $conn;
   private string $host = 'localhost';
   private string $username = 'root';
   private string $password = '';
@@ -11,15 +13,15 @@ class Database
   public function __construct()
   {
     try {
-      $this->conn = new PDO("mysql:host=$this->host;dbname=$this->dbName", $this->username, $this->password);
-      $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    } catch (PDOException $e) {
+      $this->conn = new \PDO("mysql:host=$this->host;dbname=$this->dbName", $this->username, $this->password);
+      $this->conn->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+    } catch (\PDOException $e) {
       echo "Connection database failed: " . $e->getMessage();
       exit;
     }
   }
 
-  public function getConn(): PDO
+  public function getConn(): \PDO
   {
     return $this->conn;
   }

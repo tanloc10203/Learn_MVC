@@ -1,5 +1,9 @@
 <?php
 
+namespace app\models;
+
+use app\core\Database;
+
 class HomeModel extends Database
 {
 
@@ -8,9 +12,9 @@ class HomeModel extends Database
     try {
       $stmt = $this->getConn()->prepare("SELECT * FROM sinhvien");
       $stmt->execute();
-      $stmt->setFetchMode(PDO::FETCH_ASSOC);
+      $stmt->setFetchMode(\PDO::FETCH_ASSOC);
       return $stmt->fetchAll();
-    } catch (PDOException $e) {
+    } catch (\PDOException $e) {
       echo "Error: " . $e->getMessage();
       exit;
     }

@@ -1,11 +1,15 @@
 <?php
 
+namespace app\core;
+
 class Controller
 {
   protected function model($model)
   {
-    if (isset($model) && file_exists(MODEL_PATH . $model . '.php'))
-      return new $model;
+    if (isset($model) && file_exists(MODEL_PATH . $model . '.php')) {
+      $class = "app\\models\\$model";
+      return new $class;
+    }
     exit("Model not found");
   }
 
