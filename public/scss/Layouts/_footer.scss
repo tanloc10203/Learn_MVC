@@ -1,0 +1,19 @@
+.footer {
+  margin-top: 2rem;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+
+  & p {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: $color-yellow;
+
+    margin-bottom: 0;
+    padding: 1rem 0;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+}

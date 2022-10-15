@@ -1,5 +1,6 @@
-<?php $this->getHeader("header") ?>
+<?php
 
-<?php $this->getPage($params['page'], $params) ?>
-
-<?php $this->getFooter("footer") ?>
+$this->getLayout("menuResponse", $params);
+$this->getLayout("header", $params);
+$this->getLayout("content", $params);
+$this->getLayout("footer", $params);

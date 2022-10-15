@@ -2,11 +2,21 @@
   <div class="container">
     <div class="row">
       <div class="col">
-        <p>Đồ án Công Nghệ Web HK1 2022-2023</p>
+        <p>Dashboard Đồ án Công Nghệ Web HK1 2022-2023</p>
       </div>
     </div>
   </div>
 </footer>
+
+<div id="overlay" style="display:none;">
+  <div class="loader" style="width: 3rem; height: 3rem;"></div>
+  <br />
+  Loading...
+</div>
+
+<div id="toast"></div>
+
+</div>
 
 <!-- LIBRARY JS-->
 <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
@@ -18,6 +28,20 @@
     <script src="<?= $this->getJs($value) ?>"></script>
   <?php endforeach; ?>
 <?php endif; ?>
+
+<?php if (isset($_SESSION['data']) && isset($_SESSION['data']['message'])) : ?>
+
+  <script type="text/javascript">
+    toast({
+      title: 'Success',
+      message: '<?= $_SESSION['data']['message'] ?>',
+      type: 'success',
+      duration: 3000
+    });
+  </script>
+
+  <?php unset($_SESSION['data']) ?>
+<?php endif ?>
 
 </body>
 

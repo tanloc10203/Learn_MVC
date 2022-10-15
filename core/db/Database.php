@@ -1,6 +1,6 @@
 <?php
 
-namespace app\core;
+namespace app\core\db;
 
 class Database
 {
@@ -8,7 +8,7 @@ class Database
   private string $host = 'localhost';
   private string $username = 'root';
   private string $password = '';
-  private string $dbName = 'mvc';
+  private string $dbName = 'mvc_cnw';
 
   public function __construct()
   {

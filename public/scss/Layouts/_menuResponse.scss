@@ -1,0 +1,56 @@
+.menu-response {
+  transition: all 0.5s ease-in-out 0s;
+
+  &__active {
+    color: #000 !important;
+  }
+
+  &__nav-menu {
+    position: fixed;
+    top: 57px;
+    right: -100%;
+
+    height: 100%;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 255);
+
+    list-style: none;
+    z-index: 3;
+    transition: all 0.5s ease-in-out 0s;
+    display: none;
+  }
+
+  &__item > a {
+    position: relative;
+    display: inline-block;
+    padding: 1rem;
+    color: $color-menu-response;
+
+    margin-bottom: 0.1rem;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  &__item > a::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    width: 0;
+
+    height: 2px;
+    background-color: $color-menu-response;
+    display: block;
+  }
+
+  &__item > a:hover::after {
+    width: 100%;
+    transition: all 0.3s ease-in-out 0s;
+  }
+
+  @media screen and (max-width: 42.0625em) {
+    &__nav-menu {
+      display: block;
+    }
+  }
+}

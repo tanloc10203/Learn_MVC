@@ -10,6 +10,8 @@ class NotFound extends Controller
   {
     $this->view("layoutMasterNotFound", [
       'page' => '_404',
+      'title' => 'Page not found',
+      'css' => 'notFound'
     ]);
   }
 }

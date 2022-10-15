@@ -10,32 +10,105 @@ class Controller
       $class = "app\\models\\$model";
       return new $class;
     }
-    exit("Model not found");
+    exit("Model not found !");
   }
 
   protected function view($view, $params = [])
   {
-    require_once VIEW_PATH . "$view.php";
+    if (!isset($params['title']) || !isset($params['page']) || !isset($params['css'])) {
+      exit("Missing: title or page or css");
+    }
+
+    if (file_exists(VIEW_PATH . $view . ".php")) {
+      return require_once VIEW_PATH . $view . ".php";
+    }
+
+    exit("VIEW NOT FOUND!");
   }
 
-  protected function getHeader($header)
+  public function getLayout($nameLayout, $params = [])
   {
-    if (isset($header) && file_exists(VIEW_LAYOUTS_PATH . $header . '.php'))
-      return require_once VIEW_LAYOUTS_PATH . $header . '.php';
-    exit("Header not found");
+    if (file_exists(VIEW_LAYOUTS_PATH . $nameLayout . '.php')) {
+      return require_once VIEW_LAYOUTS_PATH . $nameLayout . '.php';
+    }
+
+    exit("GET LAYOUT NOT FOUND!");
   }
 
-  protected function getFooter($footer)
+  public function getPage($namePage, $params = [])
   {
-    if (isset($footer) && file_exists(VIEW_LAYOUTS_PATH . $footer . '.php'))
-      return require_once VIEW_LAYOUTS_PATH . $footer . '.php';
-    exit("Footer not found");
+    if (file_exists(VIEW_PAGES_PATH . $namePage . '.php')) {
+      return require_once VIEW_PAGES_PATH . $namePage . '.php';
+    }
+
+    exit("GET PAGE NOT FOUND!");
   }
 
-  protected function getPage($page, $params = [])
+  public function getLayoutAdmin($nameLayout, $params = [])
   {
-    if (isset($page) && file_exists(VIEW_PAGES_PATH . $page . '.php'))
-      return require_once VIEW_PAGES_PATH . $page . '.php';
-    exit("Page not found");
+    if (file_exists(VIEW_LAYOUTS_PATH . "admin\\" . $nameLayout . '.php')) {
+      return require_once VIEW_LAYOUTS_PATH . "admin\\" . $nameLayout . '.php';
+    }
+
+    exit("GET LAYOUT NOT FOUND!");
+  }
+
+  public function getPageAdmin($namePage, $params = [])
+  {
+    if (file_exists(VIEW_PAGES_PATH . "admin\\" . $namePage . '.php')) {
+      return require_once VIEW_PAGES_PATH . "admin\\" . $namePage . '.php';
+    }
+
+    exit("GET PAGE NOT FOUND!");
+  }
+
+  protected function getJs($nameFile)
+  {
+    echo PUBLIC_PATH . "/js/$nameFile.js";
+  }
+
+  protected function getCss($nameFile)
+  {
+    echo PUBLIC_PATH . "/css/$nameFile.css";
+  }
+
+  public function method()
+  {
+    return strtolower($_SERVER['REQUEST_METHOD']);
+  }
+
+  public function isGet()
+  {
+    return $this->method() === 'get';
+  }
+
+  public function isPost()
+  {
+    return $this->method() === 'post';
+  }
+
+  public function getBody()
+  {
+    $body = [];
+
+    if ($this->method() === 'get') {
+      foreach ($_GET as $key => $value) {
+        $body[$key] = filter_input(INPUT_GET, $key, FILTER_SANITIZE_SPECIAL_CHARS);
+      }
+    }
+
+    if ($this->method() === 'post') {
+      foreach ($_POST as $key => $value) {
+        $body[$key] = filter_input(INPUT_POST, $key, FILTER_SANITIZE_SPECIAL_CHARS);
+      }
+    }
+
+    return $body;
+  }
+
+  public function redirect($url = '')
+  {
+    if (!empty($url))
+      return header("Location: .$url");
   }
 }
