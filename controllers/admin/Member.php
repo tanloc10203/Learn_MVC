@@ -33,8 +33,10 @@ class Member extends Controller
       // $model->loadData();
       // $model->validate();
 
+      $img = $this->processImg($_FILES['thumb']['name'], $_FILES['thumb']['tmp_name'], UPLOAD_PRODUCT_PATH);
+
       echo "<pre>";
-      print_r($_FILES);
+      print_r($img);
       exit;
     }
 
