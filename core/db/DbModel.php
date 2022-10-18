@@ -47,6 +47,41 @@ abstract class DbModel extends Model
   {
     $tableName = $this->tableName();
     $statement = $this->prepare("SELECT * FROM $tableName");
+
+    if (count($params) > 0) {
+      $limit = 5;
+      $page = 0;
+      $name_like = '';
+      $name_query = '';
+
+      if (isset($params['limit']) && (int)$params['limit'] > 0)
+        $limit = $params['limit'];
+
+      if (isset($params['page']) && (int)$params['page'] > 0)
+        $page = $params['page'] - 1;
+
+      if (
+        isset($params['name_like']) &&
+        !empty($params['name_like']) &&
+        isset($params['name_query']) &&
+        !empty($params['name_query'])
+      ) {
+        $name_like = $params['name_like'];
+        $name_query = $params['name_query'];
+      }
+
+      $offset = $page * $limit;
+
+      if (empty($name_query))
+        $statement = $this->prepare("SELECT * FROM $tableName LIMIT $limit OFFSET $offset");
+      else
+        $statement = $this->prepare("SELECT * FROM $tableName WHERE $name_query LIKE '%$name_like%' LIMIT $limit OFFSET $offset");
+
+      $statement->execute();
+      $statement->setFetchMode(PDO::FETCH_ASSOC);
+      return $statement->fetchAll();
+    }
+
     $statement->execute();
     $statement->setFetchMode(PDO::FETCH_ASSOC);
     return $statement->fetchAll();
@@ -67,6 +102,14 @@ abstract class DbModel extends Model
     $statement = $this->prepare("DELETE FROM $tableName WHERE id=:id;");
     $statement->execute(['id' => $id]);
     return true;
+  }
+
+  public function count()
+  {
+    $tableName = $this->tableName();
+    $statement = $this->prepare("SELECT COUNT(*) FROM $tableName");
+    $statement->execute();
+    return $statement->fetchColumn();
   }
 
   public function prepare($sql)

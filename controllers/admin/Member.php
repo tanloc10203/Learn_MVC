@@ -15,6 +15,10 @@ class Member extends Controller
       'content' => 'contentTable',
       'head_title' => 'Danh sách thành viên',
       'label_add' => 'Thêm thành viên',
+      'component' => [
+        'form' => ['name' => 'member'],
+        'pagination' => ['name' => 'member'],
+      ]
     ]);
   }
 

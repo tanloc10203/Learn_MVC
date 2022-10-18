@@ -53,6 +53,15 @@ class Controller
     exit("GET LAYOUT NOT FOUND!");
   }
 
+  public function getComponentAdmin($component, $nameLayout, $params = [])
+  {
+    if (file_exists(VIEW_COMPONENTS_PATH . "admin\\$component\\$nameLayout.php")) {
+      return require_once VIEW_COMPONENTS_PATH . "admin\\$component\\$nameLayout.php";
+    }
+
+    exit("GET COMPONENTS NOT FOUND!");
+  }
+
   public function getPageAdmin($namePage, $params = [])
   {
     if (file_exists(VIEW_PAGES_PATH . "admin\\" . $namePage . '.php')) {

@@ -18,7 +18,11 @@ class Admin extends Controller
       'page' => 'product',
       'css' => ['admin', 'index'],
       'content' => 'contentTable',
-      'head_title' => 'Danh sách sản phẩm'
+      'head_title' => 'Danh sách sản phẩm',
+      'component' => [
+        'form' => ['name' => 'product'],
+        'pagination' => ['name' => 'product']
+      ]
     ]);
   }
 
@@ -39,6 +43,12 @@ class Admin extends Controller
 
     if ($params === 'delete')
       return $category->delete();
+
+    if ($params === 'search')
+      return $category->search();
+
+    if ($params === 'pagination')
+      return $category->pagination($id);
 
     return $category->index();
   }

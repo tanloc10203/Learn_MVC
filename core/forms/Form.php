@@ -6,9 +6,9 @@ use app\core\Model;
 
 class Form
 {
-  public static function begin($action, $method, $id, $display = false)
+  public static function begin($action, $method, $id, $class = '')
   {
-    echo sprintf('<form action="%s" method="%s" id="%s" style="display: %s;">', $action, $method, $id, $display ? 'inline' : 'unset');
+    echo sprintf('<form action="%s" method="%s" id="%s" class="%s">', $action, $method, $id, $class);
     return new Form();
   }
 

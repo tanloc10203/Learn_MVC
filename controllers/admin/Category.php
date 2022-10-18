@@ -9,9 +9,19 @@ class Category extends Controller
 {
   public function index()
   {
-    $category = new CategoryModel();
+    if ($this->isPost()) {
+      $category = new CategoryModel();
 
-    $data = $category->getAll();
+      $category->loadData($this->getBody());
+
+      $data = $category->getAll($this->getBody());
+
+      $total = $category->count();
+
+      $total_row = ceil($total / 5);
+
+      exit(json_encode(['message' => 'GET ALL SUCCESS', 'data' => $data, 'total_rows' => $total_row]));
+    }
 
     $this->view("layoutAdmin", [
       'title' => 'Danh mục',
@@ -20,10 +30,14 @@ class Category extends Controller
       'content' => 'contentTable',
       'head_title' => 'Danh sách danh mục',
       'label_add' => 'Thêm danh mục',
-      'data_categories' => $data,
-      'js' => ['category']
+      'js' => ['category'],
+      'component' => [
+        'form' => ['name' => 'category'],
+        'pagination' => ['name' => 'category']
+      ]
     ]);
   }
+
 
   public function add()
   {
@@ -108,19 +122,13 @@ class Category extends Controller
 
   public function delete()
   {
-    $category = new CategoryModel();
-
-    $data = $category->getAll();
-
     if ($this->isPost()) {
+      $category = new CategoryModel();
+
       $category->loadData($this->getBody());
 
       $category->delete($this->getBody()['id']);
 
-      $_SESSION['data'] = [
-        'message' => 'Xóa thành công',
-        'error' => false
-      ];
       exit(json_encode(['message' => 'Delete success', 'error' => false]));
     }
 
@@ -131,8 +139,42 @@ class Category extends Controller
       'content' => 'contentTable',
       'head_title' => 'Danh sách danh mục',
       'label_add' => 'Thêm danh mục',
-      'data_categories' => $data,
       'js' => ['category']
     ]);
+  }
+
+  public function search()
+  {
+    if ($this->isPost()) {
+      $category = new CategoryModel();
+
+      $data = $category->loadData($this->getBody());
+
+      exit(json_encode(['message' => 'SEND DATA', 'data' => $this->getBody()]));
+    }
+
+    $this->view("layoutAdmin", [
+      'title' => 'Danh mục',
+      'page' => 'category',
+      'css' => ['admin', 'index', 'toast'],
+      'content' => 'contentTable',
+      'head_title' => 'Danh sách danh mục',
+      'label_add' => 'Thêm danh mục',
+      'js' => ['category'],
+      'component' => [
+        'form' => ['name' => 'category'],
+        'pagination' => ['name' => 'category']
+      ]
+    ]);
+  }
+
+  public function pagination($page)
+  {
+    if ($page === 'next')
+      exit(json_encode(['page' => 'next']));
+    else if ($page === 'prev')
+      exit(json_encode(['page' => 'prev']));
+
+    echo json_encode(['page' => (int)$page]);
   }
 }

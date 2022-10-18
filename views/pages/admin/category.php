@@ -15,28 +15,6 @@ $form = new Form();
   </thead>
   <tbody>
 
-    <?php if (isset($params['data_categories']) && is_array($params['data_categories'])) : ?>
-      <?php foreach ($params['data_categories'] as $category) : ?>
-
-        <tr>
-          <th scope="row"><?= htmlspecialchars($category['id']) ?></th>
-          <td><?= htmlspecialchars($category['name']) ?></td>
-          <td>
-            <a href="<?= BASE_URL . "\\admin\\category\\update\\" . $category['id'] ?>" class="btn btn-primary btn-size-small">Sửa</a>
-
-            <?php $form->begin(BASE_URL . "/admin/category/delete", 'post', 'delete', true) ?>
-
-            <input type="hidden" name="id" value="<?= $category['id'] ?>">
-
-            <button type="button" name="delete-category" data-toggle="modal" data-target="#modal-delete" class="btn btn-danger btn-size-small">Xóa</button>
-
-            <?php $form->end() ?>
-          </td>
-        </tr>
-
-      <?php endforeach ?>
-    <?php endif ?>
-
   </tbody>
 </table>
 
