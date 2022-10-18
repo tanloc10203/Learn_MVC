@@ -2,6 +2,8 @@
 
 namespace app\core;
 
+use DateTimeImmutable;
+
 class Controller
 {
   protected function model($model)
@@ -119,5 +121,27 @@ class Controller
   {
     if (!empty($url))
       return header("Location: .$url");
+  }
+
+  protected function processImg($file_name, $tmp_name, $folder_upload)
+  {
+    // $folder_upload = UPLOAD_PRODUCT_PATH || UPLOAD_USER_PATH;
+
+    if (isset($file_name)) {
+      $date = new DateTimeImmutable();
+
+      $file_name_arr = explode(".", $file_name);
+
+      if (isset($file_name_arr[1])) {
+        $img = rand(0, $date->getTimestamp()) . "." . $file_name_arr[1];
+
+        $target_file = $folder_upload . basename($img);
+
+        if (move_uploaded_file($tmp_name, $target_file))
+          return $img;
+      }
+
+      return "";
+    }
   }
 }

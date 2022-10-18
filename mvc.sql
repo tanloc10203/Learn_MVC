@@ -7,10 +7,12 @@ CREATE TABLE group_roles (
 
 CREATE TABLE users (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  fullname VARCHAR(255),
+  fullName VARCHAR(255),
   thumb TEXT,
   username VARCHAR(255),
   password VARCHAR(255),
+  phoneNumber CHAR(10),
+  email VARCHAR(255),
   group_id INT,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -23,7 +25,7 @@ VALUES
   ("ADMIN"),
   ("CLIENT"),
   ("USER"),
-  ("MEMBER"),
+  ("GUEST"),
   ("STAFF");
 
 CREATE TABLE categories (

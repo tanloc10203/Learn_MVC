@@ -3,6 +3,7 @@
 namespace app\controllers\admin;
 
 use app\core\Controller;
+use app\models\admin\UserModel;
 
 class Member extends Controller
 {
@@ -24,11 +25,25 @@ class Member extends Controller
 
   public function add()
   {
+    $model = new UserModel();
+
+    if ($this->isPost()) {
+      $data = $this->getBody();
+
+      // $model->loadData();
+      // $model->validate();
+
+      echo "<pre>";
+      print_r($_FILES);
+      exit;
+    }
+
     $this->view("layoutAdmin", [
       'title' => 'Thêm thành viên',
       'page' => 'memberAdd',
       'css' => ['admin', 'index'],
-      'content' => 'content'
+      'content' => 'content',
+      'model' => $model
     ]);
   }
 }
