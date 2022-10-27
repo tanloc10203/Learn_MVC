@@ -408,4 +408,8 @@ body {
     flex: 0 0 100%;
     max-width: 100%;
   }
+}
+
+.img-user {
+  width: 50px;
 }/*# sourceMappingURL=index.css.map */

@@ -34,6 +34,9 @@ unset($array_request_uri);
 
 define("PUBLIC_PATH", BASE_URL . '/public');
 
+define("PUBLIC_PATH_USER_UPLOAD", BASE_URL . '/uploads/users/');
+define("PUBLIC_PATH_PRODUCT_UPLOAD", BASE_URL . '/uploads/products/');
+
 // $modules = [ROOT_PATH, CONTROLLER_PATH, MODEL_PATH, VIEW_PATH, CORE_PATH, VIEW_PAGES_PATH, PUBLIC_PATH, APP_PATH];
 
 // set_include_path(get_include_path() . PATH_SEPARATOR . implode(PATH_SEPARATOR, $modules));

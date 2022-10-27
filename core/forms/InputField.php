@@ -15,10 +15,12 @@ class InputField extends BaseField
   public Model $model;
   public string $type;
   public string $attribute;
+  public string $hidden;
 
-  public function __construct(Model $model, string $attribute)
+  public function __construct(Model $model, string $attribute, bool $hidden = false)
   {
     $this->type = self::TYPE_TEXT;
+    $this->hidden = $hidden;
     parent::__construct($model, $attribute);
   }
 
@@ -49,13 +51,28 @@ class InputField extends BaseField
   public function renderInput(): string
   {
     return sprintf(
-      '<input id="%s" name="%s" value="%s" type="%s" class="form-control %s" placeholder="%s">',
+      '<input id="%s" name="%s" value="%s" type="%s" class="form-control %s" placeholder="%s" %s %s> 
+      %s
+      ',
       $this->attribute,
       $this->attribute,
       $this->model->{$this->attribute},
       $this->type,
       $this->model->hasError($this->attribute) ? 'is-invalid' : '',
       $this->model->getPlaceholder($this->attribute),
+      $this->hidden ? 'hidden' : '',
+      $this->type === self::TYPE_FILE ? 'onchange="readURL(this)"' : null,
+      $this->type === self::TYPE_PASSWORD ? $this->iconShowPassword() : null,
+
     );
+  }
+
+  public function iconShowPassword()
+  {
+    return '
+      <div class="input-custom__icon" id="show__pw">
+        <i class="fa-solid fa-eye"></i>
+      </div>
+    ';
   }
 }

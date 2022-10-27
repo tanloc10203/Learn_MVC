@@ -10,38 +10,26 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>@mdo</td>
-      <td>@mdo</td>
-      <td>@mdo</td>
-      <td>@mdo</td>
-      <td>
-        <button class="btn btn-primary btn-size-small">Sửa</button>
-        <button class="btn btn-danger btn-size-small">Xóa</button>
-      </td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>@mdo</td>
-      <td>@mdo</td>
-      <td>@mdo</td>
-      <td>@mdo</td>
-      <td>
-        <button class="btn btn-primary btn-size-small">Sửa</button>
-        <button class="btn btn-danger btn-size-small">Xóa</button>
-      </td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>@mdo</td>
-      <td>@mdo</td>
-      <td>@mdo</td>
-      <td>@mdo</td>
-      <td>
-        <button class="btn btn-primary btn-size-small">Sửa</button>
-        <button class="btn btn-danger btn-size-small">Xóa</button>
-      </td>
-    </tr>
+    <?php if (isset($params['data_member']) && is_array($params['data_member']) && count($params['data_member'])) : ?>
+      <?php foreach ($params['data_member'] as $member) : ?>
+        <tr>
+          <th scope="row"><?= $member['id'] ?></th>
+          <td>
+            <img src="<?= PUBLIC_PATH_USER_UPLOAD . $member['thumb'] ?>" alt="" class="img-thumbnail img-user">
+          </td>
+          <td><?= $member['fullName'] ?></td>
+          <td><?= $member['username'] ?></td>
+          <td><?= $member['role'] ?></td>
+          <td>
+            <button class="btn btn-primary btn-size-small">Sửa</button>
+            <button class="btn btn-danger btn-size-small">Xóa</button>
+          </td>
+        </tr>
+      <?php endforeach ?>
+    <?php else : ?>
+      <tr>
+        <th scope="row" colspan="6">Không có dữ liệu</th>
+      </tr>
+    <?php endif; ?>
   </tbody>
 </table>

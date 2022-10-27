@@ -12,6 +12,8 @@ abstract class Model extends Database
   public const RULE_MAX = 'max';
   public const RULE_MATCH = 'match';
   public const RULE_UNIQUE = 'unique';
+  public const RULE_PHONE = 'phone';
+  public const RULE_NUMBER = 'number';
 
   public array $errors = [];
 
@@ -68,6 +70,14 @@ abstract class Model extends Database
           $this->addErrorForRule($attribute, self::RULE_MAX, $rule);
         }
 
+        if ($ruleName === self::RULE_PHONE && !preg_match('/^0[0-9]{9}$/', $value)) {
+          $this->addErrorForRule($attribute, self::RULE_PHONE);
+        }
+
+        if ($ruleName === self::RULE_NUMBER && !is_numeric($value)) {
+          $this->addErrorForRule($attribute, self::RULE_NUMBER);
+        }
+
         if ($ruleName === self::RULE_MATCH && $value !== $this->{$rule['match']}) {
           $rule['match'] = $this->getLabel($rule['match']);
           $this->addErrorForRule($attribute, self::RULE_MATCH, $rule);
@@ -102,6 +112,8 @@ abstract class Model extends Database
       self::RULE_MAX => 'Độ dài tối đa của trường này phải là {max}.',
       self::RULE_MATCH => 'Trường này phải giống với {match}.',
       self::RULE_UNIQUE => 'Bản ghi với {field} này đã tồn tại.',
+      self::RULE_PHONE => 'Số điện thoại không hợp lệ',
+      self::RULE_NUMBER => 'Trường này phải là chữ số',
     ];
   }
 

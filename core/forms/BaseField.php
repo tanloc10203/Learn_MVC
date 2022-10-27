@@ -23,16 +23,18 @@ abstract class BaseField
       '
     <div class="mb-3 form-group">
       <label class="form-label" for="%s">%s</label>
-      %s
-      <div class="invalid-feedback">
+      <div class="input-custom">
         %s
+        <div class="invalid-feedback">
+          %s
+        </div>
       </div>
-    </div>
+      </div>
     ',
       $this->attribute,
       $this->model->getLabel($this->attribute),
       $this->renderInput(),
-      $this->model->getFirstError($this->attribute)
+      $this->model->getFirstError($this->attribute),
     );
   }
 }

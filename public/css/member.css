@@ -1,0 +1,182 @@
+html,
+body,
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.bg-primary {
+  background: #0096ff;
+}
+
+.bg-success {
+  background: #8bdb81;
+}
+
+.bg-orange {
+  background: #ffad60;
+}
+
+.bg-error {
+  background: #ff4949;
+}
+
+.btn {
+  outline: none;
+  border: none;
+  max-width: 100%;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.25s ease-in-out 0s;
+  font-weight: 600;
+}
+.btn:hover {
+  opacity: 0.7;
+}
+.btn.btn-success {
+  background: #3ec70b;
+  color: #fff;
+}
+.btn.btn-error {
+  background: #ff4949;
+  color: #fff;
+}
+.btn.btn-primary {
+  background: #0096ff;
+  color: #fff;
+}
+.btn.btn-secondary {
+  background: #d2daff;
+  color: #1a132f;
+}
+.btn.btn-size-small {
+  padding: 5px;
+}
+
+.table-custom {
+  width: 100%;
+  border-collapse: collapse;
+}
+.table-custom th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04aa6d;
+  color: white;
+}
+.table-custom td, .table-custom th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+.table-custom tr:nth-child(even) {
+  background: #f2f2f2;
+}
+.table-custom tr {
+  transition: all 0.25s ease-in-out 0s;
+}
+.table-custom tr:hover {
+  background-color: #ddd;
+}
+
+.mt-2 {
+  margin-top: 16px;
+}
+
+#overlay {
+  background: #ffffff;
+  color: #666666;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  z-index: 5000;
+  top: 0;
+  left: 0;
+  float: left;
+  text-align: center;
+  padding-top: 25%;
+  opacity: 0.8;
+}
+
+.loader {
+  border: 5px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 5px solid #3498db;
+  margin: 0 auto;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.img-member {
+  width: 15%;
+}
+.img-member > label {
+  height: 135px;
+}
+.img-member > label > div {
+  cursor: pointer;
+  transition: all 0.25s ease-in-out 0s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+}
+.img-member > label > div:hover {
+  opacity: 0.7;
+}
+.img-member > label > div img {
+  display: block;
+  flex-shrink: 0;
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  height: 100%;
+  -o-object-position: center;
+     object-position: center;
+}
+.img-member > label > div > i {
+  color: #fff;
+  font-size: 45px;
+}/*# sourceMappingURL=member.css.map */

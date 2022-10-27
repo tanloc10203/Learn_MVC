@@ -17,8 +17,8 @@ class Form
     echo '</form>';
   }
 
-  public function field(Model $model, $attribute)
+  public function field(Model $model, $attribute, $hidden = false)
   {
-    return new InputField($model, $attribute);
+    return new InputField($model, $attribute, $hidden);
   }
 }

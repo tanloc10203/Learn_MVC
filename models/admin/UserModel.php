@@ -3,6 +3,7 @@
 namespace app\models\admin;
 
 use app\core\db\DbModel;
+use PDO;
 
 class UserModel extends DbModel
 {
@@ -12,7 +13,7 @@ class UserModel extends DbModel
   public string $password = '';
   public string $phone = '';
   public string $email = '';
-  public int $group_id = 0;
+  public string $group_id = '';
 
   public function tableName(): string
   {
@@ -30,6 +31,21 @@ class UserModel extends DbModel
       'email' => 'Email',
       'group_id' => 'Chọn nhóm quyền',
     ];
+  }
+
+  public function getAll($params = [])
+  {
+    $statement = $this->prepare("SELECT u.id, thumb, fullName, username, g.role as role FROM `users` u JOIN `group_roles` g ON u.group_id = g.id");
+    $statement->execute();
+    $statement->setFetchMode(PDO::FETCH_ASSOC);
+    return $statement->fetchAll();
+  }
+
+  public function save()
+  {
+    $this->password = password_hash($this->password, PASSWORD_DEFAULT);
+    $this->group_id = intval($this->group_id);
+    return parent::save();
   }
 
   public function placeholder(): array
@@ -52,7 +68,7 @@ class UserModel extends DbModel
       'thumb' => [self::RULE_REQUIRED],
       'username' => [self::RULE_REQUIRED, [self::RULE_MIN, 'min' => 5]],
       'password' => [self::RULE_REQUIRED, [self::RULE_MIN, 'min' => 4], [self::RULE_MAX, 'max' => 32]],
-      'phone' => [self::RULE_REQUIRED],
+      'phone' => [self::RULE_REQUIRED, self::RULE_NUMBER, self::RULE_PHONE],
       'email' => [self::RULE_REQUIRED, self::RULE_EMAIL],
       'group_id' => [self::RULE_REQUIRED],
     ];
@@ -60,7 +76,7 @@ class UserModel extends DbModel
 
   public function attributes(): array
   {
-    return ['thumbName', 'thumb', 'username', 'password', 'phone', 'email', 'group_id'];
+    return ['fullName', 'thumb', 'username', 'password', 'phone', 'email', 'group_id'];
   }
 
   public function primaryKey(): string
