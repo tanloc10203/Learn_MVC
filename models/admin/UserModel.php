@@ -35,7 +35,39 @@ class UserModel extends DbModel
 
   public function getAll($params = [])
   {
-    $statement = $this->prepare("SELECT u.id, thumb, fullName, username, g.role as role FROM `users` u JOIN `group_roles` g ON u.group_id = g.id");
+    $sql = "SELECT u.id, thumb, fullName, username, g.role as role FROM `" . $this->tableName() . "` u JOIN `group_roles` g ON u.group_id = g.id";
+
+    if (count($params) > 0) {
+      $limit = 5;
+      $page = 0;
+      $name_like = '';
+      $name_query = '';
+
+      if (isset($params['limit']) && (int)$params['limit'] > 0)
+        $limit = $params['limit'];
+
+      if (isset($params['page']) && (int)$params['page'] > 0)
+        $page = $params['page'] - 1;
+
+      if (
+        isset($params['name_like']) &&
+        !empty($params['name_like']) &&
+        isset($params['name_query']) &&
+        !empty($params['name_query'])
+      ) {
+        $name_like = $params['name_like'];
+        $name_query = $params['name_query'];
+      }
+
+      $offset = $page * $limit;
+
+      if (empty($name_query))
+        $sql .= " LIMIT $limit OFFSET $offset";
+      else
+        $sql .= " WHERE $name_query LIKE '%$name_like%' LIMIT $limit OFFSET $offset";
+    }
+
+    $statement = $this->prepare($sql);
     $statement->execute();
     $statement->setFetchMode(PDO::FETCH_ASSOC);
     return $statement->fetchAll();

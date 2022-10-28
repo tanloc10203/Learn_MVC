@@ -30,18 +30,30 @@ abstract class DbModel extends Model
 
   public function update($id)
   {
-    $tableName = $this->tableName();
-    $attributes = $this->attributes();
-    $params = array_map(fn ($attr) => ":$attr", $attributes);
-    $statement = $this->prepare("UPDATE  $tableName SET " . implode(',', $attributes) . "=" . implode(',', $params) . " WHERE id=:id;");
+    try {
+      $tableName = $this->tableName();
+      $attributes = $this->attributes();
 
-    foreach ($attributes as $attribute)
-      $statement->bindValue(":$attribute", $this->{$attribute});
+      $attributes = array_filter($attributes, function ($attribute) {
+        return !empty($this->{$attribute});
+      });
 
-    $statement->bindValue(":id", $id, PDO::PARAM_INT);
-    $statement->execute();
+      $params = array_map(fn ($attr) => "$attr=:$attr", $attributes);
 
-    return true;
+      $sql = "UPDATE $tableName SET " . implode(',', $params) . " WHERE id=:id;";
+
+      $statement = $this->prepare($sql);
+
+      foreach ($attributes as $attribute)
+        $statement->bindValue(":$attribute", $this->{$attribute});
+
+      $statement->bindValue(":id", $id, PDO::PARAM_INT);
+      $statement->execute();
+
+      return true;
+    } catch (\PDOException $e) {
+      echo $sql . '<br>' . $e->getMessage();
+    }
   }
 
   public function getAll($params = [])

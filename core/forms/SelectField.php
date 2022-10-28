@@ -31,14 +31,18 @@ class SelectField
     return sprintf(
       '<option value="%s" %s>%s</option>',
       $value,
-      (int) $value === (int) $this->model->{$this->attribute} ? 'selected' : '',
+      !empty($this->model->{$this->attribute}) ? ((int) $value === (int) $this->model->{$this->attribute} ? 'selected' : '') : null,
       $label
     );
   }
 
   public function renderOptionFirst($label = "")
   {
-    return "<option disabled value>$label</option>";
+    return sprintf(
+      "<option disabled value='' %s>%s</option>",
+      empty($this->model->{$this->attribute}) ? 'selected' : null,
+      $label
+    );
   }
 
   public function select_end()

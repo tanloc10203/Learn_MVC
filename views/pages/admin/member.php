@@ -9,27 +9,27 @@
       <th scope="col">Thao tác</th>
     </tr>
   </thead>
-  <tbody>
-    <?php if (isset($params['data_member']) && is_array($params['data_member']) && count($params['data_member'])) : ?>
-      <?php foreach ($params['data_member'] as $member) : ?>
-        <tr>
-          <th scope="row"><?= $member['id'] ?></th>
-          <td>
-            <img src="<?= PUBLIC_PATH_USER_UPLOAD . $member['thumb'] ?>" alt="" class="img-thumbnail img-user">
-          </td>
-          <td><?= $member['fullName'] ?></td>
-          <td><?= $member['username'] ?></td>
-          <td><?= $member['role'] ?></td>
-          <td>
-            <button class="btn btn-primary btn-size-small">Sửa</button>
-            <button class="btn btn-danger btn-size-small">Xóa</button>
-          </td>
-        </tr>
-      <?php endforeach ?>
-    <?php else : ?>
-      <tr>
-        <th scope="row" colspan="6">Không có dữ liệu</th>
-      </tr>
-    <?php endif; ?>
-  </tbody>
+  <tbody></tbody>
 </table>
+
+<!-- Modal -->
+
+<div class="modal fade" id="modal-delete" tabindex="-1" role="dialog" aria-labelledby="modal-delete-member" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modal-delete-member">Xác nhận</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Bạn có chắc muốn xóa ?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy bỏ</button>
+        <button type="submit" class="btn btn-danger" id="delete-member-confirm">Xóa</button>
+      </div>
+    </div>
+  </div>
+</div>

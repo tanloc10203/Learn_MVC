@@ -77,8 +77,8 @@ class Admin extends Controller
   {
     $member = new Member();
 
-    if ($params === 'add')
-      return $member->add();
+    if (!empty($params))
+      return $member->$params();
 
     return $member->index();
   }

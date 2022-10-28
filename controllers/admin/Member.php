@@ -10,12 +10,30 @@ class Member extends Controller
 {
   public function index()
   {
-    $member = new UserModel();
+    if ($this->isPost()) {
+      $member = new UserModel();
+
+      $member->loadData($this->getBody());
+
+      $data = $member->getAll($this->getBody());
+
+      $total = $member->count();
+
+      $total_row = ceil($total / (int) $this->getBody()['limit']);
+
+      exit(json_encode([
+        'message' => 'GET ALL SUCCESS',
+        'data' => $data,
+        'total_rows' => $total_row,
+        'path_img' => PUBLIC_PATH_USER_UPLOAD
+      ]));
+    }
 
     $this->view("layoutAdmin", [
       'title' => 'Thành viên',
       'page' => 'member',
-      'css' => ['admin', 'index'],
+      'css' => ['admin', 'index', 'toast'],
+      'js' => ['member'],
       'content' => 'contentTable',
       'head_title' => 'Danh sách thành viên',
       'label_add' => 'Thêm thành viên',
@@ -23,7 +41,6 @@ class Member extends Controller
         'form' => ['name' => 'member'],
         'pagination' => ['name' => 'member'],
       ],
-      'data_member' => $member->getAll()
     ]);
   }
 
@@ -44,26 +61,123 @@ class Member extends Controller
       $model->loadData($data);
       $model->validate();
 
-      if (count($model->errors) === 0) {
-        $model->save();
+      if (count($model->errors) > 0)
+        exit(json_encode([
+          'error' => true,
+          'message' => 'Error validate',
+          'model' => $model
+        ]));
 
-        $_SESSION['data'] = [
-          'message' => 'Thêm thành công',
-          'error' => false
-        ];
+      $model->save();
 
-        $this->redirect("/admin/member");
-      }
+      $_SESSION['data'] = [
+        'message' => 'Thêm thành viên thành công',
+        'error' => false
+      ];
+
+      exit(json_encode([
+        'error' => false,
+        'message' => 'Success',
+        'model' => $model
+      ]));
     }
 
     $this->view("layoutAdmin", [
       'title' => 'Thêm thành viên',
       'page' => 'memberAdd',
-      'css' => ['admin', 'index', 'member', 'input'],
-      'js' => ['toast', 'input'],
+      'css' => ['admin', 'index', 'member', 'input', 'toast'],
+      'js' => ['input', 'member'],
       'content' => 'content',
       'model' => $model,
       'array_group_roles' => $group_roles->getAll(),
     ]);
+  }
+
+  public function update()
+  {
+    $model = new UserModel();
+    $group_roles = new GroupRoleModel();
+
+    $id = '';
+    if (isset($_GET['id']))
+      $id = $_GET['id'];
+
+    $member = $model->findById((int)$id);
+
+    if ($this->isPost()) {
+      $data = $this->getBody();
+
+      $img = '';
+
+      if (isset($_FILES['thumb'])) {
+        $model->thumb = $_FILES['thumb']['name'];
+        $img = $this->processImg($_FILES['thumb']['name'], $_FILES['thumb']['tmp_name'], UPLOAD_USER_PATH);
+      }
+
+      if ($img) $data['thumb'] = $img;
+
+      $model->loadData($data);
+
+      $model->update($id);
+
+      $_SESSION['data'] = [
+        'message' => 'Cập nhật thành công',
+        'error' => false
+      ];
+
+      exit(json_encode([
+        'error' => false,
+        'message' => 'Success',
+        'model' => $model,
+      ]));
+    }
+
+    $this->view("layoutAdmin", [
+      'title' => 'Cập nhật thành viên',
+      'page' => 'memberUpdate',
+      'css' => ['admin', 'index', 'member', 'input', 'toast'],
+      'content' => 'content',
+      'js' => ['input', 'member'],
+      'model' => $model,
+      'member' => $member,
+      'array_group_roles' => $group_roles->getAll(),
+    ]);
+  }
+
+  public function delete()
+  {
+    $id = '';
+
+    if (isset($_GET['id']))
+      $id = $_GET['id'];
+
+    if ($this->isPost()) {
+      $category = new UserModel();
+
+      $category->delete($id);
+
+      exit(json_encode(['message' => 'Delete success', 'error' => false]));
+    }
+  }
+
+  public function search()
+  {
+    if ($this->isPost()) {
+      exit(json_encode(['message' => 'SEND DATA', 'data' => $this->getBody()]));
+    }
+  }
+
+  public function pagination()
+  {
+    $page = "";
+
+    if (isset($_GET['page'])) $page = $_GET['page'];
+
+    if ($page === 'next')
+      exit(json_encode(['page' => 'next']));
+    else if ($page === 'prev')
+      exit(json_encode(['page' => 'prev']));
+
+    echo json_encode(['page' => (int)$page]);
   }
 }

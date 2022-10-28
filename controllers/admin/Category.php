@@ -18,7 +18,10 @@ class Category extends Controller
 
       $total = $category->count();
 
-      $total_row = ceil($total / 5);
+      // echo "<pre>";
+      // print_r($this->getBody());
+
+      $total_row = ceil($total / (int) $this->getBody()['limit']);
 
       exit(json_encode(['message' => 'GET ALL SUCCESS', 'data' => $data, 'total_rows' => $total_row]));
     }
@@ -146,10 +149,6 @@ class Category extends Controller
   public function search()
   {
     if ($this->isPost()) {
-      $category = new CategoryModel();
-
-      $data = $category->loadData($this->getBody());
-
       exit(json_encode(['message' => 'SEND DATA', 'data' => $this->getBody()]));
     }
 
