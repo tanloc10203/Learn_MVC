@@ -252,7 +252,6 @@ body {
 .footer {
   margin-top: 2rem;
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
-  position: fixed;
   z-index: -1;
   width: 100%;
   bottom: 0;
@@ -348,6 +347,16 @@ body {
   text-decoration: underline;
   color: rgba(0, 0, 0, 0.5);
   transition: all 0.3s ease-in-out 0s;
+}
+.products__add-to-cart {
+  outline: none;
+  background: transparent;
+  border: 0;
+}
+.products__add-to-cart:focus {
+  outline: none;
+  background: transparent;
+  border: 0;
 }
 .products__add-to-cart > i {
   font-size: 2rem;

@@ -4,7 +4,9 @@ $(document).ready(function () {
   const url = window.location.pathname;
 
   function handleGetAll(data = {}) {
-    const action = this.location.href;
+    let action = this.location.href;
+
+    // console.log(action);
 
     $("#overlay").fadeIn();
 
@@ -16,23 +18,26 @@ $(document).ready(function () {
 
       $('tbody').empty();
 
+      if (action === 'http://localhost/ManageStudent/admin/' || action === 'http://localhost/ManageStudent/admin') {
+        action === 'http://localhost/ManageStudent/admin/product/';
+      }
+
       if (data?.length === 0)
         return $('tbody').append(`<tr> <td colspan="6">Không có thành viên nào</td> </tr>`);
 
-      const tr = `${data?.map(member => (
+      const tr = `${data?.map(product => (
         `
         <tr>
-          <th scope="row">${member.id}</th>
+          <th scope="row">${product.id}</th>
           <td>
-            <img src="${path_img + member.thumb}" alt="" class="img-thumbnail img-user">
+            <img src="${path_img + product.thumb}" alt="" class="img-thumbnail img-user">
           </td>
-          <td>${member.fullName}</td>
-          <td>${member.username}</td>
-          <td>${member.role}</td>
+          <td>${product.name}</td>
+          <td>${format_price(product.price)}</td>
           <td>
-            <a href="${action}/update?id=${member.id}" class="btn btn-primary btn-size-small">Sửa</a>
+            <a href="${action}/update?id=${product.id}" class="btn btn-primary btn-size-small">Sửa</a>
 
-            <form action="${action}/delete?id=${member.id}" method="post" id="delete" class="d-inline">            
+            <form action="${action}/delete?id=${product.id}" method="post" id="delete" class="d-inline">            
               <button id="delete-member" data-toggle="modal" data-target="#modal-delete" class="btn btn-danger btn-size-small">Xóa</button>
             </form>
           </td>
@@ -40,7 +45,7 @@ $(document).ready(function () {
         `
       )).join('')}`;
 
-      $('.pagination-member').empty();
+      $('.pagination-product').empty();
 
       if (total_rows > 0) {
         const next = `
@@ -59,7 +64,7 @@ $(document).ready(function () {
           </a>
         </li>`
 
-        $('.pagination-member').append(function () {
+        $('.pagination-product').append(function () {
           let varchar = '';
 
           varchar += next;
@@ -102,11 +107,11 @@ $(document).ready(function () {
       });
   });
 
-  if (url === '/ManageStudent/admin/member' || url === '/ManageStudent/admin/member/')
+  if (url === '/ManageStudent/admin/' || url === '/ManageStudent/admin' || url === '/ManageStudent/admin/product/' || url === '/ManageStudent/admin/product')
     handleGetAll({ limit: 5 });
 
   // ADD AND UPDATE
-  $(document).on("submit", "#add_member", function (e) {
+  $(document).on("submit", "#add_product", function (e) {
     e.preventDefault();
     const action = this.action;
 
@@ -123,9 +128,9 @@ $(document).ready(function () {
       success: function (response) {
         $("#overlay").fadeOut();
         const { error, model } = response;
-        console.log(handleErrorInput({ error, model }));
-        if (!handleErrorInput({ error, model }))
+        if (!handleErrorInput({ error, model }) && !error) {
           window.location.href = cutUrl(action);
+        }
       },
       error: function (e) {
         $("#overlay").fadeOut();
@@ -208,8 +213,8 @@ $(document).ready(function () {
 
           if (Object.keys(data).length > 0) {
             const params = {
-              name_like: data.search_member,
-              name_query: 'fullName',
+              name_like: data.search_product,
+              name_query: 'name',
               page: 0,
               limit: 5
             }
@@ -235,12 +240,16 @@ $(document).ready(function () {
   let page = 1;
 
   $(document).on("click", ".page-item", function (e) {
-    const baseUri = this.baseURI;
+    let baseUri = this.baseURI;
 
     if (parseInt($(this).attr('id')))
       page = parseInt($(this).attr('id'));
 
-    const action = baseUri + `/pagination/${$(this).attr("id")}`;
+    if (baseUri === 'http://localhost/ManageStudent/admin' || baseUri === 'http://localhost/ManageStudent/admin/') {
+      baseUri = 'http://localhost/ManageStudent/admin/product';
+    }
+
+    const action = baseUri + `/pagination?page=${$(this).attr("id")}`;
 
     $.ajax({
       type: 'get',

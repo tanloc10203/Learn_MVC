@@ -1,0 +1,239 @@
+html,
+body,
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.bg-primary {
+  background: #0096ff;
+}
+
+.bg-success {
+  background: #8bdb81;
+}
+
+.bg-orange {
+  background: #ffad60;
+}
+
+.bg-error {
+  background: #ff4949;
+}
+
+.btn {
+  outline: none;
+  border: none;
+  max-width: 100%;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.25s ease-in-out 0s;
+  font-weight: 600;
+}
+.btn:hover {
+  opacity: 0.7;
+}
+.btn.btn-success {
+  background: #3ec70b;
+  color: #fff;
+}
+.btn.btn-error {
+  background: #ff4949;
+  color: #fff;
+}
+.btn.btn-primary {
+  background: #0096ff;
+  color: #fff;
+}
+.btn.btn-secondary {
+  background: #d2daff;
+  color: #1a132f;
+}
+.btn.btn-size-small {
+  padding: 5px;
+}
+
+.table-custom {
+  width: 100%;
+  border-collapse: collapse;
+}
+.table-custom th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04aa6d;
+  color: white;
+}
+.table-custom td, .table-custom th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+.table-custom tr:nth-child(even) {
+  background: #f2f2f2;
+}
+.table-custom tr {
+  transition: all 0.25s ease-in-out 0s;
+}
+.table-custom tr:hover {
+  background-color: #ddd;
+}
+
+.mt-2 {
+  margin-top: 16px;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  position: relative;
+  font-size: 1rem;
+}
+
+.cart {
+  min-height: 25.938rem;
+}
+.cart-list {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+  transition: all 0.3s ease-in-out 0s;
+}
+.cart-list:hover {
+  transform: translateY(-3px);
+}
+.cart-list__product--info {
+  display: flex;
+  align-items: center;
+}
+.cart-list__product--content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex: 2;
+}
+.cart-list__product-img {
+  width: 100px;
+  max-width: 100%;
+  height: auto;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+.cart-list__name {
+  flex: 1;
+  display: inline-block;
+  width: 500px;
+  white-space: nowrap;
+  overflow: hidden !important;
+  text-overflow: ellipsis;
+  margin-left: 10px;
+}
+.cart-list__name, .cart-list__price-head, .cart-list__quantity {
+  font-style: italic;
+  font-weight: 500;
+}
+.cart-list__qty {
+  display: flex;
+  justify-content: space-between;
+}
+.cart-list__plus, .cart-list__minus, .cart-list__quantity {
+  padding: 0 0.6rem;
+  margin-top: 0.5rem;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+.cart-list__total-price {
+  color: #ffc107;
+  font-weight: 500;
+}
+.cart-list__units {
+  font-size: 12px;
+  text-decoration: underline;
+  opacity: 0.4;
+}
+.cart-list__delete {
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out 0s;
+}
+.cart-list__delete:hover {
+  color: rgb(245, 223, 62);
+}
+@media screen and (max-width: 410px) {
+  .cart-list__number, .cart-list__total {
+    margin: 0;
+  }
+  .cart-list__price {
+    display: none;
+  }
+}
+@media screen and (max-width: 768px) {
+  .cart-list {
+    flex-wrap: wrap;
+  }
+  .cart-list__number, .cart-list__total {
+    margin: 0 1rem;
+  }
+}
+@media screen and (max-width: 991px) {
+  .cart-list__number, .cart-list__total {
+    margin: 0 1rem;
+  }
+}
+
+.total {
+  position: -webkit-sticky;
+  position: sticky;
+  bottom: 1rem;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+.total__content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6));
+  padding: 1rem;
+  color: #fff;
+  font-weight: 500;
+  border-radius: 2px;
+}
+.total__price {
+  margin-right: 2rem;
+}
+.total__unit {
+  text-transform: lowercase;
+  text-decoration: underline;
+  font-size: 14px;
+  margin-left: 3px;
+}/*# sourceMappingURL=cart.css.map */

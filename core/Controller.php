@@ -6,9 +6,9 @@ use DateTimeImmutable;
 
 class Controller
 {
-  protected function model($model)
+  protected function model($model, $path = MODEL_PATH)
   {
-    if (isset($model) && file_exists(MODEL_PATH . $model . '.php')) {
+    if (isset($model) && file_exists($path . $model . '.php')) {
       $class = "app\\models\\$model";
       return new $class;
     }
@@ -120,7 +120,7 @@ class Controller
   public function redirect($url = '')
   {
     if (!empty($url))
-      return header("Location: .$url");
+      return header("Location: $url");
   }
 
   protected function processImg($file_name, $tmp_name, $folder_upload)

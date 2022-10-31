@@ -8,6 +8,13 @@ use app\models\admin\UserModel;
 
 class Member extends Controller
 {
+  private UserModel $user;
+
+  public function __construct()
+  {
+    $this->user = new UserModel;
+  }
+
   public function index()
   {
     if ($this->isPost()) {
@@ -48,7 +55,6 @@ class Member extends Controller
   {
     $model = new UserModel();
     $group_roles = new GroupRoleModel();
-
 
     if ($this->isPost()) {
       $model->thumb = $_FILES['thumb']['name'];
@@ -114,9 +120,28 @@ class Member extends Controller
         $img = $this->processImg($_FILES['thumb']['name'], $_FILES['thumb']['tmp_name'], UPLOAD_USER_PATH);
       }
 
-      if ($img) $data['thumb'] = $img;
+      if (!empty($img)) $data['thumb'] = $img;
 
       $model->loadData($data);
+      $attributes = $model->attributes();
+      $rules = array();
+
+      $attributes = array_filter($attributes, function ($val) use ($model) {
+        return !empty($model->{$val});
+      });
+
+      foreach ($attributes as $attr) {
+        $rules[$attr] = $model->rules()[$attr];
+      }
+
+      $model->validate($rules);
+
+      if (count($model->errors) > 0)
+        exit(json_encode([
+          'error' => true,
+          'message' => 'Error validate',
+          'model' => $model
+        ]));
 
       $model->update($id);
 
@@ -179,5 +204,18 @@ class Member extends Controller
       exit(json_encode(['page' => 'prev']));
 
     echo json_encode(['page' => (int)$page]);
+  }
+
+  public function getRoleUser()
+  {
+    if (isset($_SESSION['user'])) {
+      $id = $_SESSION['user'];
+
+      $sql = "SELECT g.role FROM `users` u JOIN `group_roles` g ON u.group_id = g.id WHERE u.id = $id";
+
+      $user = $this->user->findOneAssoc($sql);
+
+      return $user->role;
+    }
   }
 }

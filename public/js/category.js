@@ -133,14 +133,6 @@ $(document).ready(function () {
     });
   }
 
-  function cutUrl(url = '') {
-    if (!url)
-      return '';
-
-    const array = url.split("/");
-    return url.slice(0, -array[array.length - 1].length);
-  }
-
   // HANDLE MODAL DELETE
   $(document).on('click', "#delete-category", function (e) {
     e.preventDefault();

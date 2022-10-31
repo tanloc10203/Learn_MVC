@@ -19,6 +19,20 @@
   <?php endforeach; ?>
 <?php endif; ?>
 
+<?php if (isset($_SESSION['message_check_role'])) : ?>
+
+  <script type="text/javascript">
+    toast({
+      title: 'ERROR',
+      message: '<?= $_SESSION['message_check_role'] ?>',
+      type: 'error',
+      duration: 3000
+    });
+  </script>
+
+  <?php unset($_SESSION['message_check_role']) ?>
+<?php endif; ?>
+
 </body>
 
 </html>

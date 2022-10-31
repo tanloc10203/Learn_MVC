@@ -11,7 +11,11 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
   <!-- LINK JS TOAST CUSTOM -->
-  <script src="<?= PUBLIC_PATH . "/js/toast.js" ?>"></script>
+  <script src="<?= $this->getJs('toast') ?>"></script>
+  <script src="<?= $this->getJs('function') ?>"></script>
+
+  <link href="<?= $this->getCss('toast') ?>" rel="stylesheet" />
+  <link href="<?= $this->getCss('admin') ?>" rel="stylesheet" />
 
   <?php if (isset($params['css']) && is_array($params['css'])) : ?>
     <?php foreach ($params['css'] as $key => $value) : ?>
@@ -44,7 +48,11 @@
             <li class="header-wp__item header-wp__cart">
               <a href="<?= BASE_URL . "/cart" ?>">
                 Cart
-                <span class="header-wp__num-cart">1</span>
+                <?php if (isset($_SESSION['cart']['info'])) : ?>
+                  <span class="header-wp__num-cart">
+                    <?= $_SESSION['cart']['info']['num_order'] ?>
+                  </span>
+                <?php endif ?>
               </a>
             </li>
           </ul>

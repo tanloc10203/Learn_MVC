@@ -8,15 +8,36 @@ use app\controllers\admin\Member;
 use app\controllers\admin\Product;
 use app\controllers\admin\Profile;
 use app\core\Controller;
+use app\models\admin\ProductModel;
 
 class Admin extends Controller
 {
   public function index()
   {
+    if ($this->isPost()) {
+      $product = new ProductModel();
+
+      $product->loadData($this->getBody());
+
+      $data = $product->getAll($this->getBody());
+
+      $total = $product->count();
+
+      $total_row = ceil($total / (int) $this->getBody()['limit']);
+
+      exit(json_encode([
+        'message' => 'GET ALL SUCCESS',
+        'data' => $data,
+        'total_rows' => $total_row,
+        'path_img' => PUBLIC_PATH_PRODUCT_UPLOAD
+      ]));
+    }
+
     $this->view("layoutAdmin", [
       'title' => 'Dashboard',
       'page' => 'product',
       'css' => ['admin', 'index'],
+      'js' => ['product'],
       'content' => 'contentTable',
       'head_title' => 'Danh sách sản phẩm',
       'component' => [
@@ -26,9 +47,14 @@ class Admin extends Controller
     ]);
   }
 
-  public function product()
+  public function product($params = '')
   {
-    (new Product())->add();
+    $product = new Product();
+
+    if (!empty($params))
+      return $product->$params();
+
+    return $this->index();
   }
 
   public function category($params = '', $id = 0)

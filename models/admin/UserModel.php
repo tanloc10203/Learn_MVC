@@ -115,4 +115,21 @@ class UserModel extends DbModel
   {
     return 'id';
   }
+
+  public function handleLogin()
+  {
+    $user = $this->findOne(['username' => $this->username]);
+
+    if (!$user) {
+      $this->addError("username", 'Người dùng không tồn tại với tài khoản ' . $this->username);
+      return false;
+    }
+
+    if (!password_verify($this->password, $user->password)) {
+      $this->addError("password", 'Mật khẩu không chính xác');
+      return false;
+    }
+
+    return $user;
+  }
 }

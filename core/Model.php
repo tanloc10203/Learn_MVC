@@ -17,6 +17,12 @@ abstract class Model extends Database
 
   public array $errors = [];
 
+  abstract public function rules(): array;
+
+  abstract public function labels(): array;
+
+  abstract public function placeholder(): array;
+
   public function loadData($data)
   {
     foreach ($data as $key => $value) {
@@ -25,12 +31,6 @@ abstract class Model extends Database
       }
     }
   }
-
-  abstract public function rules(): array;
-
-  abstract public function labels(): array;
-
-  abstract public function placeholder(): array;
 
   public function getLabel($attribute)
   {
@@ -42,9 +42,14 @@ abstract class Model extends Database
     return $this->placeholder()[$attribute] ?? $attribute;
   }
 
-  public function validate()
+  public function validate($input_rules = [])
   {
-    foreach ($this->rules() as $attribute => $rules) {
+    $result_rules = $this->rules();
+
+    if (count($input_rules) > 0)
+      $result_rules = $input_rules;
+
+    foreach ($result_rules as $attribute => $rules) {
       $value = $this->{$attribute};
 
       foreach ($rules as $rule) {

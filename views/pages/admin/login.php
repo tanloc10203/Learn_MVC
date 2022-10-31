@@ -11,7 +11,7 @@ $form = new Form();
       <h1 class="text-center">Login</h1>
 
       <div class="form-login">
-        <?php $form::begin(BASE_URL . '/auth/login', 'post', 'form-login') ?>
+        <?php $form::begin(BASE_URL . '/admin/login', 'post', 'form-login') ?>
 
         <?= $form->field($params['model'], 'username') ?>
 
