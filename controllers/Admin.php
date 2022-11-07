@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\controllers\admin\Auth;
+use app\controllers\admin\Bill;
 use app\controllers\admin\Category;
 use app\controllers\admin\Member;
 use app\controllers\admin\Product;
@@ -26,6 +27,7 @@ class Admin extends Controller
       $total_row = ceil($total / (int) $this->getBody()['limit']);
 
       exit(json_encode([
+        'action' => BASE_URL,
         'message' => 'GET ALL SUCCESS',
         'data' => $data,
         'total_rows' => $total_row,
@@ -36,7 +38,7 @@ class Admin extends Controller
     $this->view("layoutAdmin", [
       'title' => 'Dashboard',
       'page' => 'product',
-      'css' => ['admin', 'index'],
+      'css' => ['admin', 'index', 'product'],
       'js' => ['product'],
       'content' => 'contentTable',
       'head_title' => 'Danh sách sản phẩm',
@@ -99,13 +101,23 @@ class Admin extends Controller
     return $profile->index();
   }
 
-  public function member($params = '')
+  public function member($params = '', $id = '')
   {
     $member = new Member();
 
     if (!empty($params))
-      return $member->$params();
+      return $member->$params($id);
 
     return $member->index();
+  }
+
+  public function bill($params = '')
+  {
+    $bill = new Bill();
+
+    if (!empty($params))
+      return $bill->$params();
+
+    return $bill->index();
   }
 }

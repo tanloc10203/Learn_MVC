@@ -421,4 +421,13 @@ body {
 
 .img-user {
   width: 50px;
+}
+
+.cut-name {
+  display: inline-block;
+  width: 400px;
+  white-space: nowrap;
+  overflow: hidden !important;
+  text-overflow: ellipsis;
+  margin-left: 10px;
 }/*# sourceMappingURL=index.css.map */

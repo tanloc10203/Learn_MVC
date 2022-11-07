@@ -246,7 +246,7 @@ $(document).ready(function () {
       type: 'get',
       url: action,
       dataType: 'json',
-      data: page,
+      // data: page,
       processData: false,
       contentType: false,
       beforeSend: function () {

@@ -88,7 +88,7 @@ abstract class DbModel extends Model
       if (empty($name_query))
         $statement = $this->prepare("SELECT * FROM $tableName LIMIT $limit OFFSET $offset");
       else
-        $statement = $this->prepare("SELECT * FROM $tableName WHERE $name_query LIKE '%$name_like%' LIMIT $limit OFFSET $offset");
+        $statement = $this->prepare("SELECT * FROM $tableName WHERE $name_query LIKE '$name_like%' LIMIT $limit OFFSET $offset");
 
       $statement->execute();
       $statement->setFetchMode(PDO::FETCH_ASSOC);

@@ -55,4 +55,28 @@ class ProductModel extends DbModel
   {
     return 'id';
   }
+
+  public function getAllClient($params = [])
+  {
+    // echo "<pre>";
+    // print_r($params);
+    // exit;
+    $tableName = $this->tableName();
+    $statement = $this->prepare("SELECT * FROM $tableName");
+
+    if (count($params) > 0) {
+
+      if (isset($params['cat_id']) && !empty($params['cat_id'])) {
+        $statement = $this->prepare("SELECT * FROM $tableName WHERE category_id =" . $params['cat_id']);
+      }
+
+      if (isset($params['key_name']) && !empty($params['key_name'])) {
+        $statement = $this->prepare("SELECT * FROM $tableName WHERE name LIKE '%" . $params['key_name'] . "%'");
+      }
+    }
+
+    $statement->execute();
+    $statement->setFetchMode(\PDO::FETCH_ASSOC);
+    return $statement->fetchAll();
+  }
 }

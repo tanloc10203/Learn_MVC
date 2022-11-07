@@ -32,12 +32,12 @@ $(document).ready(function () {
           <td>
             <img src="${path_img + product.thumb}" alt="" class="img-thumbnail img-user">
           </td>
-          <td>${product.name}</td>
+          <td><span class='cut-name'>${product.name}</span></td>
           <td>${format_price(product.price)}</td>
           <td>
-            <a href="${action}/update?id=${product.id}" class="btn btn-primary btn-size-small">Sửa</a>
+            <a href="${response.action}/admin/product/update?id=${product.id}" class="btn btn-primary btn-size-small">Sửa</a>
 
-            <form action="${action}/delete?id=${product.id}" method="post" id="delete" class="d-inline">            
+            <form action="${response.action}/admin/product/delete?id=${product.id}" method="post" id="delete" class="d-inline">            
               <button id="delete-member" data-toggle="modal" data-target="#modal-delete" class="btn btn-danger btn-size-small">Xóa</button>
             </form>
           </td>

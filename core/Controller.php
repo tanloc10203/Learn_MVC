@@ -144,4 +144,17 @@ class Controller
       return "";
     }
   }
+
+  public function getColorByStatusId($id)
+  {
+    if ($id == 1) {
+      return 'text-warning';
+    } else if ($id == 2) {
+      return 'text-primary';
+    } else if ($id == 3) {
+      return 'text-success';
+    } else {
+      return 'text-danger';
+    }
+  }
 }

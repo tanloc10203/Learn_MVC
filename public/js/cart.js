@@ -1,5 +1,7 @@
 $(document).ready(function () {
-  const url = window.location.href;
+  const url = window.location.href.toLowerCase();
+
+  console.log(url);
 
   $(document).on("submit", "#add_form", function (e) {
     e.preventDefault();
@@ -115,7 +117,7 @@ $(document).ready(function () {
                     <div class="total__number">${format_price(data_cart_info.total)}</div>
                   </div>
                   <div>
-                    <div class="btn btn-warning total__btn">Thanh toán</div>
+                    <a href="${base_url + '/checkout'}" class="btn btn-warning total__btn">Thanh toán</a>
                   </div>
                 </div>
               </div>
@@ -146,11 +148,15 @@ $(document).ready(function () {
 
   }
 
-  if (url === 'http://localhost/ManageStudent/cart' || url === 'http://localhost/ManageStudent/cart/') {
+  if (url === 'http://localhost/managestudent/cart' || url === 'http://localhost/managestudent/cart/') {
     handleGetCart();
   }
 
+  let debounce;
+
   $(document).on('click', '#quantity', function () {
+
+    clearTimeout(debounce);
 
     const parent = $(this).parent();
 
@@ -158,32 +164,33 @@ $(document).ready(function () {
 
     const action = parent[0].action;
 
-    $.ajax({
-      type: 'post',
-      url: action,
-      dataType: 'json',
-      data: data,
-      processData: false,
-      contentType: false,
-      beforeSend: () => {
-        // $("#overlay").fadeIn();
-      },
-      success: (response) => {
-        handleGetCart();
-      },
-      error: (e) => {
-        // $("#overlay").fadeOut();
-        console.log("Oops! Something went wrong! ", e.responseText);
+    debounce = setTimeout(() => {
+      $.ajax({
+        type: 'post',
+        url: action,
+        dataType: 'json',
+        data: data,
+        processData: false,
+        contentType: false,
+        beforeSend: () => {
+          // $("#overlay").fadeIn();
+        },
+        success: (response) => {
+          handleGetCart();
+        },
+        error: (e) => {
+          // $("#overlay").fadeOut();
+          console.log("Oops! Something went wrong! ", e.responseText);
 
-        toast({
-          title: 'Error',
-          message: e.responseText,
-          type: 'error',
-          duration: 3000
-        })
-      }
-    });
-
+          toast({
+            title: 'Error',
+            message: e.responseText,
+            type: 'error',
+            duration: 3000
+          })
+        }
+      });
+    }, 500)
   });
 
   $(document).on('click', '.cart-list__delete', function () {

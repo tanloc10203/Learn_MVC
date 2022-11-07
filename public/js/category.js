@@ -172,7 +172,7 @@ $(document).ready(function () {
       success: function (response) {
 
         if (!response.error) {
-          handleGetAll();
+          handleGetAll({ limit: 5 });
           $('#modal-delete').modal('hide')
           toast({
             title: 'Success',

@@ -58,6 +58,10 @@ $user = new Member;
                   <li class="nav-item <?= $params['page'] === 'member' ? 'active' : '' ?>">
                     <a class="nav-link" href="<?= BASE_URL . "\\admin\\" . "member" ?>">Thành viên</a>
                   </li>
+
+                  <li class="nav-item <?= $params['page'] === 'bill' ? 'active' : '' ?>">
+                    <a class="nav-link" href="<?= BASE_URL . "\\admin\\" . 'bill' ?>">Đơn hàng</a>
+                  </li>
                 <?php else : ?>
                   <li class="nav-item <?= $params['page'] === 'category' ? 'active' : '' ?>">
                     <a class="nav-link" href="<?= BASE_URL . "\\admin\\" . "category" ?>">Danh mục <span class="sr-only">(current)</span></a>
@@ -65,6 +69,10 @@ $user = new Member;
 
                   <li class="nav-item <?= $params['page'] === 'product' ? 'active' : '' ?>">
                     <a class="nav-link" href="<?= BASE_URL . "\\admin" ?>">Sản phẩm </a>
+                  </li>
+
+                  <li class="nav-item <?= $params['page'] === 'bill' ? 'active' : '' ?>">
+                    <a class="nav-link" href="<?= BASE_URL . "\\admin\\" . 'bill' ?>">Đơn hàng</a>
                   </li>
                 <?php endif; ?>
 

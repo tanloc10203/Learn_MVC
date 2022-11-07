@@ -132,4 +132,21 @@ class UserModel extends DbModel
 
     return $user;
   }
+
+  public function updateAddress($id, $data = [])
+  {
+    try {
+
+      if (isset($data['phone'])) {
+        $sql = 'UPDATE `users` SET address= "' . $data['address'] . '", phone= "' . $data['phone'] . '" WHERE id=' . $id;
+      } else {
+        $sql = 'UPDATE `users` SET address= "' . $data['address'] . '" WHERE id=' . $id;
+      }
+
+      $stmt = $this->prepare($sql);
+      $stmt->execute();
+    } catch (\PDOException $e) {
+      echo $sql . "<br>" . $e->getMessage();
+    }
+  }
 }

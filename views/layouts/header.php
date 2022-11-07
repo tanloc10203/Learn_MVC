@@ -37,22 +37,31 @@
           </div>
           <ul class="header-wp__nav-menu">
             <li class="header-wp__item">
-              <a class="header-wp__link--active" href="<?= BASE_URL . "/" ?>">Home</a>
+              <a class="<?= $params['page'] == 'home' ? 'header-wp__link--active' : null ?>" href="<?= BASE_URL . "/" ?>">Home</a>
             </li>
-            <li class="header-wp__item">
-              <a href="<?= BASE_URL . "/introduce" ?>">Giới thiệu</a>
-            </li>
-            <li class="header-wp__item">
-              <a href=<?= BASE_URL . "/blog" ?>>Blog</a>
-            </li>
+            <?php if (isset($_SESSION['user_client'])) : ?>
+              <li class="header-wp__item">
+                <a class="<?= $params['page'] == 'login' ? 'header-wp__link--active' : null ?>" href=<?= BASE_URL . "/logout" ?>>Đăng xuất</a>
+              </li>
+              <li class="header-wp__item">
+                <a class="<?= $params['page'] == 'login' ? 'header-wp__link--active' : null ?>" href=<?= BASE_URL . "/bill" ?>>Đơn hàng</a>
+              </li>
+            <?php else : ?>
+              <li class="header-wp__item">
+                <a class="<?= $params['page'] == 'login' ? 'header-wp__link--active' : null ?>" href=<?= BASE_URL . "/login" ?>>Đăng nhập</a>
+              </li>
+              <li class="header-wp__item">
+                <a class="<?= $params['page'] == 'register' ? 'header-wp__link--active' : null ?>" href=<?= BASE_URL . "/register" ?>>Đăng ký</a>
+              </li>
+            <?php endif; ?>
             <li class="header-wp__item header-wp__cart">
-              <a href="<?= BASE_URL . "/cart" ?>">
+              <a class="<?= $params['page'] == 'cart' ? 'header-wp__link--active' : null ?>" href="<?= BASE_URL . "/cart" ?>">
                 Cart
-                <?php if (isset($_SESSION['cart']['info'])) : ?>
-                  <span class="header-wp__num-cart">
+                <span class="header-wp__num-cart">
+                  <?php if (isset($_SESSION['cart']['info'])) : ?>
                     <?= $_SESSION['cart']['info']['num_order'] ?>
-                  </span>
-                <?php endif ?>
+                  <?php endif ?>
+                </span>
               </a>
             </li>
           </ul>

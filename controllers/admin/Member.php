@@ -192,12 +192,8 @@ class Member extends Controller
     }
   }
 
-  public function pagination()
+  public function pagination($page)
   {
-    $page = "";
-
-    if (isset($_GET['page'])) $page = $_GET['page'];
-
     if ($page === 'next')
       exit(json_encode(['page' => 'next']));
     else if ($page === 'prev')

@@ -145,3 +145,12 @@
 .main-page {
   // padding-bottom: 100px;
 }
+
+.cut-name {
+  display: inline-block;
+  width: 400px;
+  white-space: nowrap;
+  overflow: hidden !important;
+  text-overflow: ellipsis;
+  margin-left: 10px;
+}

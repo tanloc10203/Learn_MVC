@@ -77,7 +77,7 @@ class Product extends Controller
 
       if (isset($_FILES['thumb'])) {
         $model->thumb = $_FILES['thumb']['name'];
-        $img = $this->processImg($_FILES['thumb']['name'], $_FILES['thumb']['tmp_name'], UPLOAD_USER_PATH);
+        $img = $this->processImg($_FILES['thumb']['name'], $_FILES['thumb']['tmp_name'], UPLOAD_PRODUCT_PATH);
       }
 
       if (!empty($img)) $data['thumb'] = $img;

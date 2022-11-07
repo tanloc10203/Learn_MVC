@@ -29,14 +29,14 @@
 
 <?php if (isset($_SESSION['message'])) : ?>
 
-  <!-- <script type="text/javascript">
+  <script type="text/javascript">
     toast({
       title: $_SESSION['message']['title'],
       message: $_SESSION['message']['text'],
       type: $_SESSION['message']['type'],
       duration: 3000
     });
-  </script> -->
+  </script>
 
   <?php unset($_SESSION['message']) ?>
 <?php endif ?>
